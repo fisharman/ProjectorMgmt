@@ -2,6 +2,7 @@ package ProjectorMgmt;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,21 +49,23 @@ public class ProjectorMgmtController {
         return (new ArrayDataResponse(db.getEquipmentList()));
     }
 
-/*
+
     @RequestMapping(value = "/reservation", method = RequestMethod.GET)
     public DataResponse addReservation() {
-        return (new DataResponse(db.addReservation()));
-
-    }
-
-    @RequestMapping(value = "/reservation/{id}", method = RequestMethod.GET)
-    public DataResponse getReservation (@PathVariable("id") int id) {
+        return (new DataResponse(db.setReservation("2018-04-28", "12:00", "12:30")));
 
     }
 
     @RequestMapping(value = "/reservation/{id}", method = RequestMethod.DELETE)
-    public DataResponse deleteReservation(@PathVariable("id") int id) {
-
+    public DataResponse retrieveReservation (@PathVariable("id") String id) {
+        // todo: validate id is int
+        return (new DataResponse(db.getReservation(Integer.valueOf(id))));
     }
-*/
+
+    @RequestMapping(value = "/reservation/{id}", method = RequestMethod.GET)
+    public DataResponse deleteReservation(@PathVariable("id") String id) {
+        // todo: validate id is int
+        return (new DataResponse(db.removeReservation(Integer.valueOf(id))));
+    }
+
 }
