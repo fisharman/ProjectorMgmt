@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 class Attributes {
     private String name;
-    
+ 
     public Attributes(String name){
         this.name = name;
     }
@@ -16,6 +16,7 @@ class Attributes {
     public String getName() {
         return this.name;
     }
+
 }
 
 public class Projector {

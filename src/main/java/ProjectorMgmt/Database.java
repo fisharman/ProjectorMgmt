@@ -4,14 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+
 
 @SpringBootApplication
 public class Database {
@@ -62,36 +60,27 @@ public class Database {
     public ArrayList<Projector> getEquipmentList() {
         return this.projectors;
     }
-
-
-
-    public ObjectNode setReservation (String date, String startTime, String endTime) {
+    
+    public ObjectNode setReservation (LocalDateTime startDT, LocalDateTime endDT) {
         ObjectNode objectNode = mapper.createObjectNode();
+        
+        BookingSlot bookingSlot = new BookingSlot(startDT, endDT);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        LocalDate parsedD = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
-        LocalDateTime parsedSDT = LocalDateTime.of(parsedD, LocalTime.parse(startTime, formatter));
-        LocalDateTime parsedEDT = LocalDateTime.of(parsedD, LocalTime.parse(endTime, formatter));
-
-        BookingSlot bookingSlot = new BookingSlot(parsedSDT, parsedEDT);
-
-        if (checkSchedule(bookingSlot, projectorStatus, parsedSDT, parsedEDT)){
-            // add reservation to reservation list
+        if (checkSchedule(bookingSlot, projectorStatus, startDT, endDT)){
             int id = counter.incrementAndGet();
             bookings.put(id, bookingSlot);
 
-            objectNode.put("reservation_id", Long.toString(id) );
+            objectNode.put("type", "reservation_success" );
+            objectNode.put("id", Long.toString(id) );
             objectNode.put("name", bookingSlot.getName());
             objectNode.put("date", bookingSlot.getStart().toLocalDate().toString());
             objectNode.put("startTime", bookingSlot.getStart().toLocalTime().toString());
             objectNode.put("endTime", bookingSlot.getEnd().toLocalTime().toString());
 
             return objectNode;
-
         }
-        objectNode.put("not available", "true");
 
-        return objectNode;
+        return null;
 
     }
 
