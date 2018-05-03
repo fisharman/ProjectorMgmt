@@ -13,49 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-class BookingSlot {
-    private final LocalDateTime start;
-    private final LocalDateTime end;
-    private String name;
-
-    public static boolean isOverlapping(BookingSlot slot, LocalDateTime start2, LocalDateTime end2){
-        return slot.getStart().isBefore(end2) && start2.isBefore(slot.getEnd());
-    }
-
-    public BookingSlot (LocalDateTime start, LocalDateTime end){
-        this.start = start;
-        this.end = end;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public LocalDateTime getStart () {
-        return this.start;
-    }
-
-    public LocalDateTime getEnd() {
-        return this.end;
-    }
-
-/*
-    @Override
-    public int compareTo(BookingSlot b){
-        // todo: check that end time is after start time
-        if (this.getEnd().isBefore(b.getStart()))
-            return -1;
-        if (this.getStart().isAfter(b.getEnd()))
-            return 1;
-        return 0;
-    }
-*/
-}
-
 @SpringBootApplication
 public class Database {
     // simulate equipment database
