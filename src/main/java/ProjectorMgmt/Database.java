@@ -85,23 +85,28 @@ public class Database {
     }
 
     public ObjectNode getReservation (int id) {
-        // todo: return error if id is invalid
-        ObjectNode objectNode = mapper.createObjectNode();
         BookingSlot bookingSlot = bookings.get(id);
 
+        if (bookingSlot == null)
+            return null;
+
+        ObjectNode objectNode = mapper.createObjectNode();
         objectNode.put("name", bookingSlot.getName());
         objectNode.put("date", bookingSlot.getStart().toLocalDate().toString());
         objectNode.put("startTime", bookingSlot.getStart().toLocalTime().toString());
         objectNode.put("endTime", bookingSlot.getEnd().toLocalTime().toString());
-
+            
         return objectNode;
+        
     }
 
     public ObjectNode removeReservation (int id) {
         // todo: return error if id is invalid
         ObjectNode objectNode = mapper.createObjectNode();
         BookingSlot bookingSlot = bookings.get(id);
-
+        if (bookingSlot == null)
+            return null;
+            
         ArrayList<BookingSlot> bookingArray = projectorStatus.get(bookingSlot.getName());
         boolean removed = bookingArray.remove(bookingSlot);
         bookings.remove(id);
