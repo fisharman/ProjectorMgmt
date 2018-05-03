@@ -49,16 +49,14 @@ public class ProjectorMgmtController {
     @RequestMapping(value = "/projectors", method = RequestMethod.GET)
     public ResponseEntity<ArrayDataResponse> listProjectors() {
         ArrayList<Projector> equipmentList = db.getEquipmentList();
-        equipmentList = null;
         if (equipmentList != null) {
-            return new ResponseEntity(new ArrayDataResponse(db.getEquipmentList()), HttpStatus.OK);
+            return new ResponseEntity<>(new ArrayDataResponse(db.getEquipmentList()), HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-
-    @RequestMapping(value = "/reservation", method = RequestMethod.GET)
+    
+    @RequestMapping(value = "/reservation", method = RequestMethod.POST)
     public DataResponse addReservation() {
         return (new DataResponse(db.setReservation("2018-04-28", "12:00", "12:30")));
 
