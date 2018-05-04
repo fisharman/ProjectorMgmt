@@ -3,8 +3,8 @@
 ### Install Instruction
 Use Jar  
 
-download from: https://github.com/fisharman/ProjectorMgmt/releases  
-then start the service in command line with
+- download from: https://github.com/fisharman/ProjectorMgmt/releases  
+- then start the service in command line with
 ```
 java -jar ProjectorMgmt_v1.jar
 ```
@@ -12,8 +12,8 @@ java -jar ProjectorMgmt_v1.jar
 OR
 
 Build it yourself
-1. Clone repo
-2. Build using included build.gradle and /gradle/wrapper
+- Clone repo
+- Build using included build.gradle and /gradle/wrapper
 
 Then send HTTP requests to localhost:8080 endpoints listed below
 
