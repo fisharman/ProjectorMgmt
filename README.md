@@ -1,24 +1,19 @@
 # Project Booking Managment System
 
 ### Install Instruction
-Use Jar
+Use Jar  
 
-
-```
-https://github.com/fisharman/ProjectorMgmt/releases/download/v1.0.0/ProjectorMgmt_v1.jar
-
+download from: https://github.com/fisharman/ProjectorMgmt/releases  
 then start the service in command line with
-
+```
 java -jar ProjectorMgmt_v1.jar
 ```
 
 OR
 
 Build it yourself
-```
 1. Clone repo
 2. Build using included build.gradle and /gradle/wrapper
-```
 
 Then send HTTP requests to localhost:8080 endpoints listed below
 
@@ -26,7 +21,7 @@ Then send HTTP requests to localhost:8080 endpoints listed below
 
 Specification: http://jsonapi.org/format/
 
-##### GET /projectors
+#### GET /projectors
 
 Response Envelope
 
@@ -49,7 +44,7 @@ curl -X GET \
 ```
 
 
-##### POST /reservation
+#### POST /reservation
 
 
 Request Envelope
@@ -67,7 +62,7 @@ Request Envelope
 ```
 
 
-Response Envelope (201)
+Response Envelope (201)  
 ***note: time in 24 hour format. UTC would be a better implementation...***
 ```JSON
 {
@@ -100,7 +95,7 @@ curl -X POST \
   { "date": "2018-05-03", "startTime": "12:10", "endTime": "13:00" } } }'
 ```
 
-##### get /reservation/:id
+#### GET /reservation/:id
 
 Response Envelope
 ```
@@ -120,7 +115,7 @@ curl -X GET \
   http://localhost:8080/reservation/1 \
 ```
 
-##### DELETE /reservation/:id
+#### DELETE /reservation/:id
 
 Response:
 Success No-Content (204)
