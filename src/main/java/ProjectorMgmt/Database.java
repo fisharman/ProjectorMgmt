@@ -100,19 +100,16 @@ public class Database {
         
     }
 
-    public ObjectNode removeReservation (int id) {
-        // todo: return error if id is invalid
-        ObjectNode objectNode = mapper.createObjectNode();
+    public boolean removeReservation (int id) {
+        
         BookingSlot bookingSlot = bookings.get(id);
         if (bookingSlot == null)
-            return null;
+            return false;
             
         ArrayList<BookingSlot> bookingArray = projectorStatus.get(bookingSlot.getName());
         boolean removed = bookingArray.remove(bookingSlot);
         bookings.remove(id);
-
-        objectNode.put("removed", removed ? "yes":"no");
-
-        return objectNode;
+        
+        return true;
     }
 }

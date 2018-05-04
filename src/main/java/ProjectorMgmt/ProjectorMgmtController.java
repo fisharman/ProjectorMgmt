@@ -79,17 +79,17 @@ public class ProjectorMgmtController {
     
     @RequestMapping(value = "/reservation", method = RequestMethod.POST)
     public ResponseEntity<DataResponse> addReservation(@RequestBody ObjectNode json) {
-        String date, startDT, endDT;
+        String date, startT, endT;
         LocalDateTime parsedSDT, parsedEDT;
         
         try {
             JsonNode attributes = json.get("data").get("attributes");
             date = attributes.get("date").asText();
-            startDT = attributes.get("startTime").asText();
-            endDT = attributes.get("endTime").asText();
+            startT = attributes.get("startTime").asText();
+            endT = attributes.get("endTime").asText();
             
-            parsedSDT = ConvertDateTime.convertDT(date, startDT);
-            parsedEDT = ConvertDateTime.convertDT(date, endDT);
+            parsedSDT = ConvertDateTime.convertDT(date, startT);
+            parsedEDT = ConvertDateTime.convertDT(date, endT);
         }
         catch (Exception e){
             return new ResponseEntity<>(new DataResponse(null, "bad input"),HttpStatus.BAD_REQUEST);
@@ -106,8 +106,15 @@ public class ProjectorMgmtController {
 
     @RequestMapping(value = "/reservation/{id}", method = RequestMethod.GET)
     public ResponseEntity<DataResponse> retrieveReservation (@PathVariable("id") String id) {
-        // todo: validate id is int
-        ObjectNode reservation = db.getReservation(Integer.valueOf(id));
+        int parsedInt;
+        try {
+            parsedInt = Integer.valueOf(id);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(new DataResponse(null, "bad input"),HttpStatus.BAD_REQUEST);
+        }
+        
+        ObjectNode reservation = db.getReservation(parsedInt);
         if (reservation != null)
             return new ResponseEntity<>(new DataResponse(reservation, null),HttpStatus.OK);
         
@@ -116,9 +123,18 @@ public class ProjectorMgmtController {
     }
 
     @RequestMapping(value = "/reservation/{id}", method = RequestMethod.DELETE)
-    public DataResponse deleteReservation(@PathVariable("id") String id) {
-        // todo: validate id is int
-        return (new DataResponse(db.removeReservation(Integer.valueOf(id)),null));
+    public ResponseEntity<DataResponse> deleteReservation(@PathVariable("id") String id) {
+        int parsedInt;
+        try {
+            parsedInt = Integer.valueOf(id);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(new DataResponse(null, "bad input"),HttpStatus.BAD_REQUEST); 
+        }
+        
+        if (db.removeReservation(parsedInt))
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }
